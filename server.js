@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { google } = require('googleapis');
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+import {GoogleGenAI} from '@google/genai';
 const admin = require('firebase-admin');
 const rateLimit = require('express-rate-limit');
 const { body, validationResult } = require('express-validator');
@@ -70,8 +70,8 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Google Gemini AI Initialization
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+const genAI = new GoogleGenAI(process.env.GEMINI_API_KEY);
+const model = genAI.generateContent({ model: "gemini-2.0-flash-001" });
 
 // Google Authentication Configuration
 const auth = new google.auth.GoogleAuth({
